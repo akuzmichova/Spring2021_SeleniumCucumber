@@ -6,32 +6,29 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.testng.Assert;
 
-public class Homework5SD {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class WeeklyForecastSD {
+    Homepage hp = new Homepage();
+    Web web = new Web();
 
     @Given("I am on darksky home page")
     public void openDarksky() {
-        Web web = new Web();
         web.openUrl("https://darksky.net/forecast/40.7127,-74.0059/us12/en");
     }
 
-    @When("I scroll to Today timeline")
-    public void scrollToTodayTL() {
-        Homepage hp = new Homepage();
-        hp.scrollToToday();
-    }
-
-    @And("I click the plus button")
-    public void clickPlusButton() {
-        Homepage hp = new Homepage();
-        hp.clickPlusButton();
+    @When("I click on Today plus button")
+    public void clickTodayPlusButton() {
+        hp.clickTodayPlusButton();
     }
 
     @Then("I verify tempValues on timeline are the same as tempValue in the Today's detail")
     public void verifyTempValuesTL() {
-        Homepage hp = new Homepage();
-        hp.verifyTempValues();
-        Web web = new Web();
+        Assert.assertEquals(hp.getTodayLowTempFromTimeline(), hp.getTodayLowTempInsideTimeline(), "Low TempValue on timeline is NOT the same as Low tempValue in the Today's detail");
+        Assert.assertEquals(hp.getTodayHighTempFromTimeline(), hp.getTodayHighTempInsideTimeline(), "High TempValue on timeline is NOT the same as High tempValue in the Today's detail");
         web.closePage();
     }
 
@@ -43,15 +40,15 @@ public class Homework5SD {
 
     @And("I click Time Machine button")
     public void clickTimeMachineButton() {
-        Homepage hp = new Homepage();
         hp.clickTMButton();
     }
 
     @Then("I verify current date is selected")
     public void verifyCurrentDateSelected() {
-        Homepage hp = new Homepage();
-        hp.verifyCurDateSelected();
-        Web web = new Web();
+        Date currentTimeDate = new Date();
+        SimpleDateFormat df = new SimpleDateFormat("d");
+        String currentDay = df.format(currentTimeDate);
+        Assert.assertEquals(currentDay, hp.getSelectedDateInCalendar(), "Current date is not selected");
         web.closePage();
     }
 
