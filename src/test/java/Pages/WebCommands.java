@@ -1,26 +1,18 @@
 package Pages;
 
 import DriverWrapper.Web;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
+import com.google.common.base.Function;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.Wait;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
-public class WebCommands {
-
-    /**
-     * Method to find a WebElement
-     * Input: By
-     * Return type: WebElement
-     */
-    public WebElement getElement(By locator) {
-        // wait for 30sec before declaring element is not found
-        return Web.getDriver().findElement(locator);
-    }
+public class WebCommands extends Web {
 
     /**
      * Method to find WebElements
@@ -29,7 +21,46 @@ public class WebCommands {
      */
     public List<WebElement> getElements(By locator) {
         // wait for 30sec before declaring element is not found
-        return Web.getDriver().findElements(locator);
+        Wait fWait = new FluentWait(Web.getDriver())
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(1))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(NoAlertPresentException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .withMessage("Elements are not found within 30 seconds");
+
+        List<WebElement> elements = (List<WebElement>) fWait.until(new Function<WebDriver, List<WebElement>>() {
+            public List<WebElement> apply(WebDriver driver) {
+                return driver.findElements(locator);
+            }
+        });
+        return elements;
+    }
+
+    /**
+     * Method to find a WebElement
+     * Input: By
+     * Return type: WebElement
+     */
+    public WebElement getElement(By locator) {
+        // return Web.getDriver().findElement(locator);
+
+        Wait fWait = new FluentWait(Web.getDriver())
+                .withTimeout(Duration.ofSeconds(30))
+                .pollingEvery(Duration.ofSeconds(1))
+                .ignoring(NoSuchElementException.class)
+                .ignoring(NoAlertPresentException.class)
+                .ignoring(StaleElementReferenceException.class)
+                .withMessage("Element is not found within 30 seconds");
+
+        WebElement element = (WebElement) fWait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(locator);
+            }
+        });
+
+        return element;
+
     }
 
     /**
@@ -263,7 +294,6 @@ public class WebCommands {
         }
     }
 
-
     /**
      * Method to get the current window handle
      * Input:
@@ -274,7 +304,7 @@ public class WebCommands {
     }
 
     /**
-     * Method to get the current window handle
+     * Method to get the current window handles
      * Input:
      * Return type: Set<String>
      */
@@ -290,6 +320,10 @@ public class WebCommands {
     public void switchToWindow(String handle) {
         Web.getDriver().switchTo().window(handle);
     }
+
+    /**
+     * Method to wait using explicit wait
+     */
+
+
 }
-
-

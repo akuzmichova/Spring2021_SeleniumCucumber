@@ -2,14 +2,12 @@ package StepDefinition.Darksky;
 
 import DriverWrapper.Web;
 import Pages.Darksky.Homepage;
+import Utils.DateMethods;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.testng.Assert;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class WeeklyForecastSD {
     Homepage hp = new Homepage();
@@ -17,7 +15,7 @@ public class WeeklyForecastSD {
 
     @Given("I am on darksky home page")
     public void openDarksky() {
-        web.openUrl("https://darksky.net/forecast/40.7127,-74.0059/us12/en");
+        web.openUrl2("https://darksky.net/forecast/40.7127,-74.0059/us12/en");
     }
 
     @When("I click on Today plus button")
@@ -29,7 +27,7 @@ public class WeeklyForecastSD {
     public void verifyTempValuesTL() {
         Assert.assertEquals(hp.getTodayLowTempFromTimeline(), hp.getTodayLowTempInsideTimeline(), "Low TempValue on timeline is NOT the same as Low tempValue in the Today's detail");
         Assert.assertEquals(hp.getTodayHighTempFromTimeline(), hp.getTodayHighTempInsideTimeline(), "High TempValue on timeline is NOT the same as High tempValue in the Today's detail");
-        web.closePage();
+        //web.closePage();
     }
 
     @When("I scroll to Time Machine button")
@@ -45,11 +43,9 @@ public class WeeklyForecastSD {
 
     @Then("I verify current date is selected")
     public void verifyCurrentDateSelected() {
-        Date currentTimeDate = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("d");
-        String currentDay = df.format(currentTimeDate);
+        String currentDay = DateMethods.getCurrentDateWithFormat("d");
         Assert.assertEquals(currentDay, hp.getSelectedDateInCalendar(), "Current date is not selected");
-        web.closePage();
+        //web.closePage();
     }
 
 }

@@ -1,11 +1,16 @@
 package Pages.Darksky;
 
+import DriverWrapper.Web;
 import Pages.WebCommands;
+import Utils.TestConstant;
 import org.openqa.selenium.By;
-import org.testng.Assert;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class Homepage extends WebCommands {
     By todayTLlocator = By.xpath("//*[contains(text(), 'Today')]");
@@ -20,10 +25,12 @@ public class Homepage extends WebCommands {
     By buttonTM = By.xpath("//a[@class='button' and contains(text(), 'Time Machine')]");
     By todayDate = By.xpath("//td[@class='is-today']");
 
+    By timeDataPoints = By.xpath("//div[@class='hours']//span[contains(text(),'am') or contains(text(),'pm')]");
+
     public void scrollToToday() {
         scrollToElement(getElement(todayTLlocator));
         try {
-            Thread.sleep(500);
+            Thread.sleep(TestConstant.halfSecond);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -65,6 +72,39 @@ public class Homepage extends WebCommands {
 
     public String getSelectedDateInCalendar() {
         return getElementAttributeValue(todayDate, "data-day");
+    }
+
+    public void openDarksky() {
+        Web web = new Web();
+        web.openUrl2("https://darksky.net/forecast/40.7127,-74.0059/us12/en");
+    }
+
+    List<String> timeDataPointsFromTimeline = new ArrayList<String>();
+
+    public List<String> getTimeDataPointsFromTimeline() {
+        for (WebElement element : getElements(timeDataPoints)) {
+            timeDataPointsFromTimeline.add(getElementText(element));
         }
+        return timeDataPointsFromTimeline;
+    }
+
+    List<String> timeDataPointsFromCalendar = new ArrayList<>();
+
+    public List<String> getTimeLineFromCalendar() {
+        Calendar currentCalendar = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("ha");
+        for (int i = 0; i < 11; i++) {
+            currentCalendar.add(Calendar.HOUR, 2);
+            String formattedCurrentTime = df.format(currentCalendar.getTime());
+            timeDataPointsFromCalendar.add(formattedCurrentTime.toLowerCase());
+        }
+        return timeDataPointsFromCalendar;
+
+    }
+
+    public boolean isTimeDataPointsEqual() {
+        return timeDataPointsFromTimeline.equals(timeDataPointsFromCalendar);
+    }
+
 }
 
