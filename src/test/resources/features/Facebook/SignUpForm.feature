@@ -1,3 +1,4 @@
+@regression
 Feature: SignUpForm
 
   Scenario: No gender-radio button is selected on Facebook sign up form

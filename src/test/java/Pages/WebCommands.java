@@ -14,6 +14,8 @@ import java.util.Set;
 
 public class WebCommands extends Web {
 
+    Alert myAlert;
+
     /**
      * Method to find WebElements
      * Input: By
@@ -304,7 +306,7 @@ public class WebCommands extends Web {
     }
 
     /**
-     * Method to get the current window handles
+     * Method to get the current window handle
      * Input:
      * Return type: Set<String>
      */
@@ -325,5 +327,76 @@ public class WebCommands extends Web {
      * Method to wait using explicit wait
      */
 
+    /**
+     * Method to switch on an alert
+     * Input:
+     * Return type: void
+     */
+    public void switchToAlert() {
+        myAlert = Web.getDriver().switchTo().alert();
+    }
 
+    /**
+     * Method to get the text of an alert
+     * Input:
+     * Return type: String
+     */
+    public String getAlertText() {
+        return myAlert.getText();
+    }
+
+    /**
+     * Method to click on -ve action button
+     * Input:
+     * Return type:
+     */
+    public void clickAlertNegativeButton() {
+        myAlert.dismiss();
+    }
+
+    /**
+     * Method to click on +ve action button
+     * Input:
+     * Return type:
+     */
+    public void clickAlertPositiveButton() {
+        myAlert.accept();
+    }
+
+    /**
+     * Method to type on an alert
+     * Input: String
+     * Return type:
+     */
+    public void typeOnAlert(String data) {
+        myAlert.sendKeys(data);
+    }
+
+    /**
+     * Method to switch on frame using frameId
+     * Input: String
+     * Return type:
+     */
+    public void switchToFrame(String id) {
+        Web.getDriver().switchTo().frame(id);
+    }
+
+    /**
+     * Method to switch on frame using locator
+     * Input: By
+     * Return type:
+     */
+    public void switchToFrame(By locator) {
+        WebElement frame = getElement(locator);
+        Web.getDriver().switchTo().frame(frame);
+    }
+
+    /**
+     * Method to switch on frame using by index
+     * Input: int
+     * Return type:
+     */
+    public void switchToFrame(int index) {
+        Web.getDriver().switchTo().frame(index);
+    }
 }

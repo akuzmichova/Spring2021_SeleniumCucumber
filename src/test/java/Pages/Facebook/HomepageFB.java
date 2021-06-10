@@ -8,7 +8,7 @@ import java.util.List;
 public class HomepageFB extends WebCommands {
 
     By createNewAccLocator = By.linkText("Create New Account");
-    By genderRadioButtons = By.className("_8esa");
+    By genderRadioButtons = By.xpath("//input[@type='radio']");
     By messengerLink = By.linkText("Messenger");
 
     public void clickCreateNewAccountButton() {
@@ -22,7 +22,7 @@ public class HomepageFB extends WebCommands {
     public boolean areGenderRadioButtonsSelected() {
         boolean isGenderRadioButtonSelected = false;
         for (WebElement genderRadioButton : getGenderRadioButtons()) {
-            isGenderRadioButtonSelected &= isElementSelected(genderRadioButton);
+            isGenderRadioButtonSelected |= isElementSelected(genderRadioButton);
         }
         return isGenderRadioButtonSelected;
     }

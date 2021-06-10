@@ -1,3 +1,4 @@
+@regression
 Feature: WeeklyForecast
 
   Scenario: TempValues (low and high) on timeline are the same as tempValue in the Today's detail

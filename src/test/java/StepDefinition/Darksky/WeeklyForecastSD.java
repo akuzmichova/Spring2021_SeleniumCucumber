@@ -15,7 +15,7 @@ public class WeeklyForecastSD {
 
     @Given("I am on darksky home page")
     public void openDarksky() {
-        web.openUrl2("https://darksky.net/forecast/40.7127,-74.0059/us12/en");
+        web.openUrl("https://darksky.net/forecast/40.7127,-74.0059/us12/en");
     }
 
     @When("I click on Today plus button")
