@@ -1,5 +1,5 @@
+@regression
 Feature: Messenger
-
 
   Scenario: User see "Incorrect email or phone number" error msg when login with no credentials on facebook messenger
     When On Facebook Homepage I click on Messenger link
