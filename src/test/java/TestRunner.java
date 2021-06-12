@@ -10,7 +10,10 @@ import org.junit.runner.RunWith;
         // Specify the step definition package name
         glue = {"StepDefinition", "DriverWrapper"},
 
-        tags = {"@regression"}
+        //Specify tags to be executed
+        tags = {"@regression"},
+
+        plugin = {"pretty", "html:Reports/Default/"}
 )
 public class TestRunner {
 }
