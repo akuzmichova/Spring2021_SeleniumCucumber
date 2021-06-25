@@ -2,7 +2,6 @@ package StepDefinition.Scholastic;
 
 import Pages.Scholastic.AccountPageScholastic;
 import Pages.Scholastic.HomepageScholastic;
-import Utils.TestConstant;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -21,7 +20,7 @@ public class CreateAccountSD {
 
     @And("^I click on Teacher/Administrator/Homeschooler radio button and click Next$")
     public void clickteacherRadioBtnAndNext() {
-        hs.clickteacherRadioButton();
+        hs.clickTeacherRadioButton();
         hs.clickTeacherNextButton();
     }
 
@@ -70,13 +69,13 @@ public class CreateAccountSD {
     }
 
     @When("^I select '.*' state from Search By State And City State drop-down$")
-    public void inputState() {
+    public void selectState() {
         hs.clickSchoolStateField();
         hs.selectStateFromDropDown();
     }
 
     @And("^I select '(.*)' city from City drop-down and click Search$")
-    public void inputCity(String city) {
+    public void selectCity(String city) {
         hs.selectCityFromDropDown(city);
         hs.clickStateCitySearchButton();
     }
@@ -88,7 +87,15 @@ public class CreateAccountSD {
 
     @And("^I choose '(.*)' from drop autosuggestion list and click Next$")
     public String selectSchoolNameFromDropDown(String schoolName) {
-        hs.selectSchoolNameFromDropDown(schoolName);
+        hs.selectSchoolNameFromDropDown();
+        hs.getschoolNameAndAddressTextHP();
+        hs.clickMySchoolNextButton();
+        return hs.getschoolNameAndAddressTextHP();
+    }
+
+    @And("^I choose Adak School '(.*)' from drop autosuggestion list and click Next$")
+    public String selectAdakSchoolNameFromDropDown(String schoolName) {
+        hs.selectSchoolNameFromDropDown();
         hs.getschoolNameAndAddressTextHP();
         hs.clickMySchoolNextButton();
         return hs.getschoolNameAndAddressTextHP();
