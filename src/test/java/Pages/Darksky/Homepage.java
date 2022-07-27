@@ -4,17 +4,9 @@ import DriverWrapper.Web;
 import Pages.WebCommands;
 import Utils.DateMethods;
 import Utils.TestConstant;
-import gherkin.lexer.Da;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.Assert;
-import org.testng.annotations.Test;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class Homepage extends WebCommands {

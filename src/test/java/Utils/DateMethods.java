@@ -12,7 +12,6 @@ public class DateMethods {
         Date currentTimeDate = new Date();
         SimpleDateFormat df = new SimpleDateFormat(pattern);
         return df.format(currentTimeDate);
-
     }
 
     List<String> timeDataPointsFromCalendar = new ArrayList<>();
